@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple To‑Do List</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; display: flex; justify-content: center; padding: 40px; }
+    #todo-container { background: white; padding: 20px; border-radius: 8px; width: 100%; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    #task-input { width: calc(100% - 80px); padding: 8px; font-size: 16px; }
+    #add-button { padding: 8px 12px; font-size: 16px; }
+    ul { list-style: none; padding: 0; margin-top: 20px; }
+    li { display: flex; justify-content: space-between; align-items: center; background: #fafafa; margin-bottom: 8px; padding: 8px 12px; border-radius: 4px; }
+    li .delete-button { border: none; background: none; color: red; font-size: 18px; cursor: pointer; }
+    li .delete-button:hover { color: darkred; }
+  </style>
+</head>
+<body>
+
+  <div id="todo-container">
+    <div>
+      <input type="text" id="task-input" placeholder="Enter a new task…" />
+      <button id="add-button">Add</button>
+    </div>
+    <ul id="task-list"></ul>
+  </div>
+
+  <script>
+    const inputEl = document.getElementById('task-input');
+    const addBtn = document.getElementById('add-button');
+    const listEl = document.getElementById('task-list');
+
+    function addTask() {
+      const text = inputEl.value.trim();
+      if (!text) return;
+
+      const li = document.createElement('li');
+      li.textContent = text;
+
+      const btn = document.createElement('button');
+      btn.textContent = '×';
+      btn.className = 'delete-button';
+      btn.addEventListener('click', () => listEl.removeChild(li));
+
+      li.appendChild(btn);
+      listEl.appendChild(li);
+
+      inputEl.value = '';
+      inputEl.focus();
+    }
+
+    addBtn.addEventListener('click', () => addTask());
+    inputEl.addEventListener('keypress', e => {
+      if (e.key === 'Enter') addTask();
+    });
+  </script>
+
+</body>
+</html>
